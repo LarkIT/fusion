@@ -1,0 +1,3 @@
+class fusion {
+  notify{"Nick":}
+}
