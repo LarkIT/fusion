@@ -13,7 +13,7 @@ class fusion(
     extract       => true,
     extract_path  => $install_dir,
     extract_flags => '--strip 1 -zxvf',
-#    creates       => '/opt/fusion/3.1.2'
+    creates       => '/opt/fusion/3.1.2'
   }
 
 }
