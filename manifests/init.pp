@@ -6,6 +6,13 @@ class fusion(
   $lvconfig    = {},
 ) {
 
+  user { 'fusion' :
+    ensure           => present,
+    home             => $install_dir,
+    password_max_age => '-1',
+    managehome       => true,
+  }
+
   $fusion_config_defaults = {
     'fusion_vg' =>
     {
