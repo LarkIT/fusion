@@ -16,6 +16,7 @@ class fusion(
     }
   }
 
+  # Just in case we need to override the vg config
   $fusion_config_merged = deep_merge($fusion_config_defaults, $lvconfig)
 
   file{ $install_dir:
@@ -36,4 +37,11 @@ class fusion(
     require      => Class[ 'lvm' ],
   }
 
+  group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker
+  file_line { "add_siteminder_env_to_${service}_sysconfig":
+    ensure => present,
+    path   => "${install_dir}/${version}/conf/fusion.properties",
+    line   => "group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker",
+    match  => "group.default = zookeeper, solr, api, connectors, ui",
+  }
 }
