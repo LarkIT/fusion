@@ -19,12 +19,13 @@ class fusion(
     }
   }
 
-  file{ '/opt/fusion':
+  file{ $install_dir:
     ensure => directory
   }
 
   class { 'lvm':
     volume_groups => $fusion_config_defaults,
+    require       => File[ $install_dir ],
   }
 
   archive { "/opt/fusion-${version}.tar.gz":
@@ -33,6 +34,7 @@ class fusion(
     extract_path => '/opt',
     creates      => "${install_dir}/${version}",
     cleanup      => true,
+    require      => Class[ 'lvm' ],
   }
 
 }
