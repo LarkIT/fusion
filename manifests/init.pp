@@ -2,6 +2,7 @@ class fusion(
   $install_dir = '/opt/fusion',
   $url         = 'https://s3-us-west-2.amazonaws.com/red-software/fusion-3.1.2.tar.gz'
 ) {
+  include archive
 
   file{ '/opt/fusion':
     ensure => directory
