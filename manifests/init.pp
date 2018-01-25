@@ -14,9 +14,8 @@ class fusion(
     source       => $url,
     extract      => true,
     extract_path => '/opt',
-    creates      => '/opt/fusion/3.1.2'
+    creates      => '/opt/fusion/3.1.2',
     cleanup      => true,
-
   }
 
 }
