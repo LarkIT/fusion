@@ -46,10 +46,11 @@ class fusion(
   }
 
   file_line { "Update fusion.properties":
-    ensure => present,
-    path   => "${install_dir}/${version}/conf/fusion.properties",
-    line   => "group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker",
-    match  => "group.default = zookeeper, solr, api, connectors, ui",
+    ensure  => present,
+    path    => "${install_dir}/${version}/conf/fusion.properties",
+    line    => "group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker",
+    match   => "group.default = zookeeper, solr, api, connectors, ui",
+    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
   }
 
   exec { "Fix Owner for ${install_dir}":
