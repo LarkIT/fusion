@@ -9,7 +9,7 @@ class fusion(
     ensure => directory
   }
 
-  archive { "fusion-${version}.tar.gz":
+  archive { "${install_dir}/fusion-${version}.tar.gz":
     source        => $url,
     extract       => true,
     extract_path  => $install_dir,
