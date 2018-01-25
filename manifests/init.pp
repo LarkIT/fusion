@@ -7,7 +7,7 @@ class fusion(
     ensure => directory
   }
 
-  archive { $install_dir,
+  archive { $install_dir:
     source        => $url,
     extract       => true,
     extract_path  => $install_dir,
