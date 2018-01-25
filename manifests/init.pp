@@ -6,7 +6,7 @@ class fusion(
   $lvconfig    = {},
 ) {
 
-  user { 'fusion' :
+  user { 'fusion':
     ensure           => present,
     home             => $install_dir,
     password_max_age => '-1',
@@ -27,7 +27,8 @@ class fusion(
   $fusion_config_merged = deep_merge($fusion_config_defaults, $lvconfig)
 
   file{ $install_dir:
-    ensure => directory
+    ensure  => directory
+    require => User[ 'fusion' ],
   }
 
   class { 'lvm':
@@ -49,5 +50,14 @@ class fusion(
     path   => "${install_dir}/${version}/conf/fusion.properties",
     line   => "group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker",
     match  => "group.default = zookeeper, solr, api, connectors, ui",
+  }
+
+  exec { "Fix Owner for ${install_dir}":
+    command     => "/bin/chown -R fusion:fusion ${install_dir}",
+    before      => File[ "${install_dir}/logs" ],
+    require     => Archive[ "/opt/fusion-${version}.tar.gz" ],
+    subscribe   => Archive[ "/opt/fusion-${version}.tar.gz" ],
+    logoutput   => true,
+    refreshonly => true,
   }
 }
