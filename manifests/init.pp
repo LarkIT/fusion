@@ -11,10 +11,12 @@ class fusion(
 
   #archive { "${install_dir}/fusion-${version}.tar.gz":
   archive { "/opt/fusion-${version}.tar.gz":
-    source        => $url,
-    extract       => true,
-    extract_path  => $install_dir,
-    creates       => '/opt/fusion/3.1.2'
+    source       => $url,
+    extract      => true,
+    extract_path => '/opt',
+    creates      => '/opt/fusion/3.1.2'
+    cleanup      => true,
+
   }
 
 }
