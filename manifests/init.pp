@@ -37,7 +37,6 @@ class fusion(
     require      => Class[ 'lvm' ],
   }
 
-  group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker
   file_line { "add_siteminder_env_to_${service}_sysconfig":
     ensure => present,
     path   => "${install_dir}/${version}/conf/fusion.properties",
