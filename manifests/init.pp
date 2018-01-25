@@ -11,7 +11,7 @@ class fusion(
     source        => $url,
     extract       => true,
     extract_path  => $install_dir,
-    creates       => "${homedir}/help" #directory inside tgz
+#    creates       => "${homedir}/help" #directory inside tgz
   }
 
 }
