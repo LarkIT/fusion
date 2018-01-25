@@ -4,9 +4,9 @@ class fusion(
 ) {
   include archive
 
-  file{ '/opt/fusion':
-    ensure => directory
-  }
+#  file{ '/opt/fusion':
+#    ensure => directory
+#  }
 
   archive { $install_dir:
     source        => $url,
