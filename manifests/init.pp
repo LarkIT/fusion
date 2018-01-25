@@ -54,7 +54,6 @@ class fusion(
 
   exec { "Fix Owner for ${install_dir}":
     command     => "/bin/chown -R fusion:fusion ${install_dir}",
-    before      => File[ "${install_dir}/logs" ],
     require     => Archive[ "/opt/fusion-${version}.tar.gz" ],
     subscribe   => Archive[ "/opt/fusion-${version}.tar.gz" ],
     logoutput   => true,
