@@ -27,7 +27,7 @@ class fusion(
   $fusion_config_merged = deep_merge($fusion_config_defaults, $lvconfig)
 
   file{ $install_dir:
-    ensure  => directory
+    ensure  => directory,
     require => User[ 'fusion' ],
   }
 
