@@ -2,7 +2,7 @@ class fusion(
   $install_dir = '/opt/fusion',
   $version     = '3.1.2',
   $url         = "https://s3-us-west-2.amazonaws.com/red-software/fusion-${version}.tar.gz",
-  $lvsize      = '30G',
+  $lvsize      = '20G',
   $lvconfig    = {},
 ) {
 
@@ -16,7 +16,7 @@ class fusion(
           'mountpath' => $install_dir
         }
       }
-     }
+    }
   }
 
   file{ '/opt/fusion':
