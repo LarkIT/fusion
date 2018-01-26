@@ -2,6 +2,7 @@ class fusion(
   $install_dir = '/opt/fusion',
   $version     = '3.1.2',
   $url         = "https://s3-us-west-2.amazonaws.com/red-software/fusion-${version}.tar.gz",
+  manage_pkg   = true,
   $lvsize      = '20G',
   $lvconfig    = {},
 ) {
@@ -32,6 +33,7 @@ class fusion(
   }
 
   class { 'lvm':
+    manage_pkg    => $manage_pkg,
     volume_groups => $fusion_config_defaults,
     require       => File[ $install_dir ],
   }
