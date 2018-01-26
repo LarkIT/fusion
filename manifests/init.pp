@@ -62,4 +62,20 @@ class fusion(
     logoutput   => true,
     refreshonly => true,
   }
+
+  $hiera_ssh_keys       = $host_railsapp::hiera_ssh_keys
+
+  notify{"Nick $hiera_ssh_keys
+    # SSH Keys
+    if $hiera_ssh_keys {
+      $_ssh_keys = merge($host_railsapp::global_ssh_keys,
+        merge(hiera_hash($hiera_ssh_keys, {}), $ssh_keys))
+    } else {
+      $_ssh_keys = merge($host_railsapp::global_ssh_keys, $ssh_keys)
+    }
+
+  host_railsapp::sshkeys{"${username}-${application}":
+    user => $username,
+    keys => $_ssh_keys,
+  }
 }
