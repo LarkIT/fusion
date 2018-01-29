@@ -63,20 +63,8 @@ class fusion(
     refreshonly => true,
   }
 
-  #$hiera_ssh_keys       = lookup("host_railsapp::global_ssh_keys", String, "first")
-  $hiera_ssh_keys = hiera('host_railsapp::global_ssh_keys', undef)
+  $hiera_ssh_keys       = lookup("host_railsapp::global_ssh_keys", Hash, "first")
+  #$hiera_ssh_keys = hiera('host_railsapp::global_ssh_keys', undef)
 
   notify{"Nick $hiera_ssh_keys":}
-    # SSH Keys
-    if $hiera_ssh_keys {
-      $_ssh_keys = merge($host_railsapp::global_ssh_keys,
-        merge(hiera_hash($hiera_ssh_keys, {}), $ssh_keys))
-    } else {
-      $_ssh_keys = merge($host_railsapp::global_ssh_keys, $ssh_keys)
-    }
-
-  host_railsapp::sshkeys{"${username}-${application}":
-    user => $username,
-    keys => $_ssh_keys,
-  }
 }
