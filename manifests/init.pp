@@ -66,7 +66,7 @@ class fusion(
   $hiera_ssh_keys = lookup('host_railsapp::global_ssh_keys', Hash, "first")
 
   $hiera_ssh_keys.each |$key,$value| {
-    notify{"Key = $key":} 
+    notify{"Key = $key, Value = $value":} 
   } 
 
 }
