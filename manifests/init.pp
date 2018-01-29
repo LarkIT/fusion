@@ -67,7 +67,7 @@ class fusion(
 
   $hiera_ssh_keys.each |$key,$value| {
     $ssh_key = $value['key']
-#    notify{"Value = $ssh_key":} 
+
     ssh_authorized_key { $key:
       ensure => present,
       user   => 'fusion',
