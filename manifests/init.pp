@@ -64,7 +64,7 @@ class fusion(
   }
 
   #$hiera_ssh_keys       = lookup("host_railsapp::global_ssh_keys", Hash[String,String], "first")
-  $hiera_ssh_keys = lookup("host_railsapp::global_ssh_keys", Hash, "first")
+  $hiera_ssh_keys = hiera_hash('host_railsapp::global_ssh_keys')
 
   notify{"Nick $hiera_ssh_keys":}
     # SSH Keys
