@@ -79,5 +79,6 @@ class fusion(
   # Keep fusion running
   service { 'fusion':
     ensure => running,
+    enable => true,
   }
 }
