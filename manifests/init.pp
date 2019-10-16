@@ -75,4 +75,9 @@ class fusion(
       key    => $ssh_key,
     }
   } 
+
+  # Keep fusion running
+  service { 'fusion':
+    ensure => running,
+  }
 }
