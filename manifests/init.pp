@@ -75,6 +75,10 @@ class fusion(
       key    => $ssh_key,
     }
   } 
+  
+  # Copy configuration files
+
+  # Install init script
 
   # Keep fusion running
   service { 'fusion':
