@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- See http://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender for documentation -->
+<!-- start with -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector for a significant
+performance boost -->
+<Configuration status="WARN" monitorInterval="120">
+  <ThreadContextMapFilter onMatch="ACCEPT" onMismatch="NEUTRAL" operator="or">
+    <KeyValuePair key="DEBUG" value="true"/>
+  </ThreadContextMapFilter>
+  <Appenders>
+    <RollingRandomAccessFile name="file" fileName="${sys:apollo.home}/var/log/api/api.log"
+      filePattern="${sys:apollo.home}/var/log/api/api.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{1}@%L] - %X - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB" /> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${sys:apollo.home}/var/log/api" maxDepth="1">
+          <!--IfFileName glob="api*.log.gz"-->
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" /> 
+              -->
+              <IfLastModified age="7d" />
+            </IfAny>
+          <!--/IfFileName-->
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingRandomAccessFile>
+  </Appenders>
+  <Loggers>
+    <logger name="org.apache.zookeeper" level="WARN" />
+    <logger name="org.apache.ignite" level="WARN" />
+    <logger name="com.netflix.governator.guice.InternalAutoBindModule" level="WARN" />
+    <logger name="org.apache.spark.ml.feature.StringIndexerModel" level="ERROR"/>
+    <logger name="com.lucidworks.apollo.pipeline.impl.DelegatingStageCallback" level="ERROR" />
+    <logger name="org.apache.spark" level="WARN" />
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>

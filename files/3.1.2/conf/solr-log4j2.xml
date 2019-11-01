@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="120">
+  <Appenders>
+    <RollingFile name="file" fileName="${sys:apollo.home}/var/log/solr/solr.log"
+      filePattern="${sys:apollo.home}/var/log/solr/solr.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{1}@%L] - %X - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB" /> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${sys:apollo.home}/var/log/solr" maxDepth="1">
+          <!--IfFileName glob="solr*.log.gz"-->
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" /> 
+              -->
+              <IfLastModified age="7d" />
+            </IfAny>
+          <!--/IfFileName-->
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <logger name="org.apache.zookeeper" level="WARN" />
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>
