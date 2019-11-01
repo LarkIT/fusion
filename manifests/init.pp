@@ -79,7 +79,7 @@ class fusion(
   # Copy configuration files
   
    
-  file { '/opt/fusion/${version}/conf/fusion.properties':
+  file { "/opt/fusion/${version}/conf/fusion.properties":
   ensure  => file,
   owner   => 'fusion',
   group   => 'fusion',
