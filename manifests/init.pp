@@ -86,7 +86,8 @@ class fusion(
     group   => 'fusion',
     mode    => '0644',
     notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf/fusion.properties",
+    source  => "puppet:///modules/${module_name}/${version}/conf",
+    recurse => 'remote',
   }
 
   
