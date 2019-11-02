@@ -78,7 +78,6 @@ class fusion(
   
   # Copy configuration files
   
-   
   file { "/opt/fusion/${version}/conf":
     ensure  => file,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
@@ -90,8 +89,16 @@ class fusion(
     recurse => 'remote',
   }
 
-  
-  
+  file { "/opt/fusion/${version}/apps":
+    ensure  => file,
+    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
+    owner   => 'fusion',
+    group   => 'fusion',
+    mode    => '0644',
+    notify  => Service['fusion'],
+    source  => "puppet:///modules/${module_name}/${version}/apps",
+    recurse => 'remote',
+  }
 
   # Install init script
 
