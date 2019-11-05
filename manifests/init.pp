@@ -101,6 +101,7 @@ class fusion(
   }
 
   # Install init script
+  
   file { "/etc/systemd/system/fusion.service":
     ensure  => file,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
