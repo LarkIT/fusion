@@ -101,6 +101,15 @@ class fusion(
   }
 
   # Install init script
+  file { "/etc/systemd/system/fusion.service":
+    ensure  => file,
+    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => "puppet:///modules/${module_name}/${version}/apps",
+  } ~>
+  Exec['systemctl-daemon-reload']
 
   # Keep fusion running
   service { 'fusion':

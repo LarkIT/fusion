@@ -1,0 +1,22 @@
+[Unit]
+Description=Lucidworks Fusion
+Requires=fusion.service
+After=multi-user.target
+
+[Service]
+Type=simple
+Environment="FUSION_HOME=/opt/fusion"
+WorkingDirectory=/opt/fusion
+User=fusion
+Group=fusion
+ExecStart=/opt/fusion/bin/fusion run default
+ExecStop=/opt/fusion/bin/fusion stop default
+# To use a specific JVM, specify the JAVA_HOME directory:
+#Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
+# Disable TimeoutStartSec, because the service does not signal completion
+TimeoutStartSec=0
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
