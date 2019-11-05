@@ -107,7 +107,7 @@ class fusion(
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => "puppet:///modules/${module_name}/${version}/apps",
+    source  => "puppet:///modules/${module_name}/fusion.service",
   } ~>
   Exec['systemctl-daemon-reload']
 
