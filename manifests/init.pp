@@ -81,7 +81,7 @@ class fusion(
     group   => 'fusion',
     mode    => '0644',
     notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf/zookeper/log4j2.xml",
+    source  => "puppet:///modules/${module_name}/${version}/conf/zookeeper/log4j2.xml",
   }
 
   file { "/opt/fusion/${version}/apps":
