@@ -84,6 +84,16 @@ class fusion(
     source  => "puppet:///modules/${module_name}/${version}/conf/zookeeper/log4j2.xml",
   }
 
+  file { "/opt/fusion/${version}/conf/agent-log4j2.xml":
+    ensure  => file,
+    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
+    owner   => 'fusion',
+    group   => 'fusion',
+    mode    => '0644',
+    notify  => Service['fusion'],
+    source  => "puppet:///modules/${module_name}/${version}/conf/agent-log4j2.xml",
+  }
+
   file { "/opt/fusion/${version}/apps":
     ensure  => file,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
