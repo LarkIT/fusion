@@ -79,7 +79,7 @@ class fusion(
   # Copy configuration files
   
   file { "/opt/fusion/${version}/conf":
-    ensure  => file,
+    ensure  => directory,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
     owner   => 'fusion',
     group   => 'fusion',
