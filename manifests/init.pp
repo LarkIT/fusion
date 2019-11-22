@@ -47,13 +47,6 @@ class fusion(
     require      => Class[ 'lvm' ],
   }
 
-  #file_line { "Update fusion.properties":
-  #  ensure  => present,
-  #  path    => "${install_dir}/${version}/conf/fusion.properties",
-  #  line    => "group.default = zookeeper, solr, api, connectors, ui, spark-master, spark-worker",
-  #  match   => "group.default = zookeeper, solr, api, connectors, ui",
-  #  require => Archive[ "/opt/fusion-${version}.tar.gz" ],
-  #}
 
   exec { "Fix Owner for ${install_dir}":
     command     => "/bin/chown -R fusion:fusion ${install_dir}",
@@ -78,15 +71,17 @@ class fusion(
   
   # Copy configuration files
   
-  file { "/opt/fusion/${version}/conf":
+
+  
+
+  file { "/opt/fusion/${version}/conf/zookeeper/log4j2.xml":
     ensure  => file,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
     owner   => 'fusion',
     group   => 'fusion',
     mode    => '0644',
     notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf",
-    recurse => 'remote',
+    source  => "puppet:///modules/${module_name}/${version}/conf/zookeper/log4j2.xml",
   }
 
   file { "/opt/fusion/${version}/apps":
