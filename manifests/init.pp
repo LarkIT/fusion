@@ -72,40 +72,16 @@ class fusion(
   # Copy configuration files
   # Probably not the most efficient way to do this but no other way to track individual file contents could be found.
 
-  file { "/opt/fusion/${version}/conf/zookeeper/log4j2.xml":
+  file { "/opt/fusion/${version}/conf":
     ensure  => file,
     require => Archive[ "/opt/fusion-${version}.tar.gz" ],
     owner   => 'fusion',
     group   => 'fusion',
     mode    => '0644',
     notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf/zookeeper/log4j2.xml",
+    source  => "puppet:///modules/${module_name}/${version}/conf",
+    recurse => 'remote',
   }
-
-  file { "/opt/fusion/${version}/conf/agent-log4j2.xml":
-    ensure  => file,
-    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
-    owner   => 'fusion',
-    group   => 'fusion',
-    mode    => '0644',
-    notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf/agent-log4j2.xml",
-  }
-
-  file { "/opt/fusion/${version}/conf/api-log4j2.xml":
-    ensure  => file,
-    require => Archive[ "/opt/fusion-${version}.tar.gz" ],
-    owner   => 'fusion',
-    group   => 'fusion',
-    mode    => '0644',
-    notify  => Service['fusion'],
-    source  => "puppet:///modules/${module_name}/${version}/conf/api-log4j2.xml",
-  }
-
-
-
-#####
-
 
   file { "/opt/fusion/${version}/apps":
     ensure  => file,
