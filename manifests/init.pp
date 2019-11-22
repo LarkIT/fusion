@@ -70,9 +70,7 @@ class fusion(
   } 
   
   # Copy configuration files
-  
-
-  
+  # Probably not the most efficient way to do this but no other way to track individual file contents could be found.
 
   file { "/opt/fusion/${version}/conf/zookeeper/log4j2.xml":
     ensure  => file,
