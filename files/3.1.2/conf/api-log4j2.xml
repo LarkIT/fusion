@@ -2,7 +2,6 @@
 <!-- See http://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender for documentation -->
 <!-- start with -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector for a significant
   performance boost -->
-<!-- managed by Puppet -->
 <Configuration status="WARN" monitorInterval="120">
   <ThreadContextMapFilter onMatch="ACCEPT" onMismatch="NEUTRAL" operator="or">
     <KeyValuePair key="DEBUG" value="true"/>
