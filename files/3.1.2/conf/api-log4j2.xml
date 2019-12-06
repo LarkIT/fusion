@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- See http://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender for documentation -->
 <!-- start with -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector for a significant
-  performance boost -->
+performance boost -->
 <Configuration status="WARN" monitorInterval="120">
   <ThreadContextMapFilter onMatch="ACCEPT" onMismatch="NEUTRAL" operator="or">
     <KeyValuePair key="DEBUG" value="true"/>
