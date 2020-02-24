@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="120">
+  <Appenders>
+    <RollingFile name="file" fileName="${sys:apollo.home}/var/log/agent/agent.log"
+                 filePattern="${sys:apollo.home}/var/log/agent/agent.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{3}@%L] - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB"/> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy fileIndex="nomax">
+        <Delete basePath="${sys:apollo.home}/var/log/agent" maxDepth="1">
+          <IfFileName glob="agent*.log.gz">
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" />
+              -->
+              <IfLastModified age="30d"/>
+            </IfAny>
+          </IfFileName>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+    <RollingFile name="metrics" fileName="${sys:apollo.home}/var/log/metrics/metrics.log"
+                 filePattern="${sys:apollo.home}/var/log/metrics/metrics-%i.log.gz">
+      <PatternLayout>
+        <pattern>%msg%n</pattern>
+      </PatternLayout>
+      <Filters>
+        <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="ACCEPT"/>
+      </Filters>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="100MB"/> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy fileIndex="nomax">
+        <Delete basePath="${sys:apollo.home}/var/log/metrics" maxDepth="1">
+          <IfFileName glob="metrics*.log.gz">
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" />
+              -->
+              <IfLastModified age="2d"/>
+            </IfAny>
+          </IfFileName>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="com.netflix.config" level="ERROR"/>
+    <logger name="org.apache.karaf.shell.impl.console" level="ERROR"/>
+    <logger name="com.lucidworks.apollo.component.AbstractConsistentIdComponent" level="WARN"/>
+
+    <logger name="com.lucidworks.apollo.metrics.writer.Slf4jMetricWriter" level="DEBUG" additivity="false">
+      <AppenderRef ref="metrics" level="DEBUG"/>
+      <AppenderRef ref="file" level="INFO"/>
+    </logger>
+
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>

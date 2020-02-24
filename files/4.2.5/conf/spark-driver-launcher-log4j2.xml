@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="120">
+  <Appenders>
+    <RollingFile name="file" fileName="${env:FUSION_HOME}/var/log/api/spark-driver-launcher.log"
+                 filePattern="${env:FUSION_HOME}/var/log/api/spark-driver-launcher.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{3}@%L] - %X - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB"/> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy fileIndex="nomax">
+        <Delete basePath="${env:FUSION_HOME}/var/log/api" maxDepth="1">
+          <IfFileName glob="spark-driver-launcher.log.gz">
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" /> 
+              -->
+              <IfLastModified age="30d"/>
+            </IfAny>
+          </IfFileName>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <logger name="org.apache.spark.repl.Main" level="WARN"/>
+    <logger name="org.spark_project.jetty" level="WARN"/>
+    <logger name="org.spark_project.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+    <logger name="org.apache.parquet" level="ERROR"/>
+    <logger name="parquet" level="ERROR"/>
+    <logger name="org.apache.hadoop.hive.metastore.RetryingHMSHandler" level="FATAL"/>
+    <logger name="org.apache.hadoop.hive.ql.exec.FunctionRegistry" level="ERROR"/>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+    <logger name="org.apache.ignite" level="WARN"/>
+    <logger name="org.apache.spark.ContextCleaner" level="ERROR"/>
+    <logger name="org.apache.spark" level="WARN"/>
+    <logger name="org.apache.hadoop.hive.metastore.ObjectStore" level="ERROR"/>
+    <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR"/>
+    <logger name="org.apache.spark.util.Utils" level="ERROR"/>
+    <logger name="org.spark_project.jetty.server.handler.ContextHandler" level="WARN"/>
+    <logger name="com.lucidworks.apollo.common.CloseableRegistry" level="WARN"/>
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="120">
+  <Appenders>
+    <RollingFile name="file" fileName="${sys:apollo.home}/var/log/zookeeper/zookeeper.log"
+                 filePattern="${sys:apollo.home}/var/log/zookeeper/zookeeper.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{3}@%L] - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB"/> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy fileIndex="nomax">
+        <Delete basePath="${sys:apollo.home}/var/log/zookeeper" maxDepth="1">
+          <IfFileName glob="zookeeper*.log.gz">
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" /> 
+              -->
+              <IfLastModified age="30d"/>
+            </IfAny>
+          </IfFileName>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>

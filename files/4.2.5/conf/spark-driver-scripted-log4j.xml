@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+  <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="file" value="${FUSION_HOME}/var/log/api/spark-driver-scripted.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{ISO8601} - %-5p [%t:%C{3}@%L] - %X - %m%n" />
+    </layout>
+  </appender>
+
+  <logger name="org.apache.spark.repl.Main">
+    <level value="WARN" />
+  </logger>
+
+  <logger name="org.apache.spark">
+    <level value="WARN" />
+  </logger>
+
+  <logger name="org.apache.hadoop.hive.metastore.ObjectStore">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="org.apache.zookeeper.ClientCnxn">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="org.apache.spark.util.Utils">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="org.spark_project.jetty">
+    <level value="WARN" />
+  </logger>
+
+  <logger name="org.spark_project.jetty.util.component.AbstractLifeCycle">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="org.apache.parquet">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="parquet">
+    <level value="ERROR" />
+  </logger>
+
+  <logger name="org.apache.hadoop.hive.metastore.RetryingHMSHandler">
+    <level value="FATAL" />
+  </logger>
+
+  <logger name="org.apache.hadoop.hive.ql.exec.FunctionRegistry">
+    <level value="ERROR" />
+  </logger>
+
+  <root>
+    <level value="INFO" />
+    <appender-ref ref="file" />
+  </root>
+
+</log4j:configuration>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="120">
+  <Appenders>
+    <RollingFile name="file" fileName="${sys:apollo.home}/var/log/connectors/connectors-classic/connectors-classic.log"
+                 filePattern="${sys:apollo.home}/var/log/connectors/connectors-classic/connectors-classic.%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%d{ISO8601} - %-5p [%t:%C{3}@%L] - %X - %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/> <!-- Rotated everyday -->
+        <SizeBasedTriggeringPolicy size="100MB"/> <!-- Rotated every 100 MB -->
+      </Policies>
+      <DefaultRolloverStrategy fileIndex="nomax">
+        <Delete basePath="${sys:apollo.home}/var/log/connectors/connectors-classic" maxDepth="1">
+          <IfFileName glob="connectors-classic*.log.gz">
+            <IfAny>
+              <!-- Uncomment next line if you want to limit disk space used by logs
+              <IfAccumulatedFileSize exceeds="2GB" /> 
+              -->
+              <IfLastModified age="30d"/>
+            </IfAny>
+          </IfFileName>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+    <logger name="org.apache.ignite" level="WARN"/>
+    <logger name="org.apache.pdfbox" level="WARN"/>
+    <logger name="org.apache.spark.ml.feature.StringIndexerModel" level="ERROR"/>
+    <logger name="com.lucidworks.apollo.pipeline.impl.DelegatingStageCallback" level="ERROR"/>
+    <logger name="org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean" level="ERROR"/>
+    <logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR" />
+    <logger name="org.apache.http.impl.client.AuthenticationStrategyImpl" level="ERROR" />
+
+    <Root level="INFO">
+      <AppenderRef ref="file"/>
+    </Root>
+  </Loggers>
+</Configuration>
